@@ -2,6 +2,7 @@ import React from "react";
 import firebase from "../../firebase";
 import { connect } from "react-redux";
 import { setCurrentChannel, setPrivateChannel } from "../../actions";
+// prettier-ignore
 import { Menu, Icon, Modal, Form, Input, Button, Label } from "semantic-ui-react";
 
 class Channels extends React.Component {
@@ -37,28 +38,30 @@ class Channels extends React.Component {
   };
 
   addNotificationListener = channelId => {
-    this.state.messagesRef.child(channelId).on('value', snap => {
-      if(this.state.channel) {
+    this.state.messagesRef.child(channelId).on("value", snap => {
+      if (this.state.channel) {
         this.handleNotifications(
-          channelId, 
+          channelId,
           this.state.channel.id,
           this.state.notifications,
           snap
         );
       }
     });
-  }
+  };
 
-  handleNotifications = (channelId,currentChannelId, notifications, snap) => {
+  handleNotifications = (channelId, currentChannelId, notifications, snap) => {
     let lastTotal = 0;
 
-    let index = notifications.findIndex(notification => notification.id === channelId);
+    let index = notifications.findIndex(
+      notification => notification.id === channelId
+    );
 
-    if(index !== -1) {
-      if(channelId !== currentChannelId) {
+    if (index !== -1) {
+      if (channelId !== currentChannelId) {
         lastTotal = notifications[index].total;
 
-        if(snap.numChildren() - lastTotal > 0) {
+        if (snap.numChildren() - lastTotal > 0) {
           notifications[index].count = snap.numChildren() - lastTotal;
         }
       }
@@ -69,15 +72,15 @@ class Channels extends React.Component {
         total: snap.numChildren(),
         lastKnownTotal: snap.numChildren(),
         count: 0
-      })
+      });
     }
 
     this.setState({ notifications });
-  }
+  };
 
   removeListeners = () => {
     this.state.channelsRef.off();
-  }
+  };
 
   setFirstChannel = () => {
     const firstChannel = this.state.channels[0];
@@ -87,7 +90,7 @@ class Channels extends React.Component {
       this.setState({ channel: firstChannel });
     }
     this.setState({ firstLoad: false });
-  }
+  };
 
   addChannel = () => {
     const { channelsRef, channelName, channelDetails, user } = this.state;
@@ -137,15 +140,19 @@ class Channels extends React.Component {
   };
 
   clearNotifications = () => {
-    let index = this.state.notifications.findIndex(notification => notification.id === this.state.channel.id);
+    let index = this.state.notifications.findIndex(
+      notification => notification.id === this.state.channel.id
+    );
 
     if (index !== -1) {
       let updatedNotifications = [...this.state.notifications];
-      updatedNotifications[index].total = this.state.notifications[index].lastKnownTotal;
+      updatedNotifications[index].total = this.state.notifications[
+        index
+      ].lastKnownTotal;
       updatedNotifications[index].count = 0;
       this.setState({ notifications: updatedNotifications });
     }
-  }
+  };
 
   setActiveChannel = channel => {
     this.setState({ activeChannel: channel.id });
@@ -155,13 +162,13 @@ class Channels extends React.Component {
     let count = 0;
 
     this.state.notifications.forEach(notification => {
-      if(notification.id === channel.id ) {
+      if (notification.id === channel.id) {
         count = notification.count;
       }
     });
 
-    if(count > 0) return count;
-  }
+    if (count > 0) return count;
+  };
 
   displayChannels = channels =>
     channels.length > 0 &&

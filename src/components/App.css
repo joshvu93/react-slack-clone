@@ -6,7 +6,7 @@ body,
   padding: 1em;
 }
 
-/* SidePannel.js */
+/* SidePanel.js */
 .menu {
   padding-bottom: 2em;
 }
@@ -14,11 +14,6 @@ body,
 /* Messages.js */
 .messages {
   height: 62vh;
-  overflow-y: scroll;
-}
-
-.messages__progress {
-  height: 58vh;
   overflow-y: scroll;
 }
 
@@ -42,7 +37,7 @@ body,
   padding: 1em;
 }
 
-/* ProgresssBar.js */
+/* ProgressBar.js */
 .progress__bar {
   margin: 0.3em 0 0 0 !important;
 }
